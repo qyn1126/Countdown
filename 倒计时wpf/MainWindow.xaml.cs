@@ -29,24 +29,25 @@ namespace 倒计时wpf
         {
             InitializeComponent();
             DayDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd " + "17:30:00"));
-            WeekDate = DateTime.Now;
+            WeekDate = DateTime.Now.AddDays(-1);
             GetHoliday(DateTime.Now.ToString("yyyy-MM-dd"));
 
             while (true){
-
+                WeekDate = WeekDate.AddDays(1);
                 if (Holliday.ContainsKey(WeekDate.ToString("yyyy-M-d"))&&Holliday[WeekDate.ToString("yyyy-M-d")] == 1)
                 {
                     break;
                 }
                 if (Holliday.ContainsKey(WeekDate.ToString("yyyy-M-d")) && Holliday[WeekDate.ToString("yyyy-M-d")] == 2)
                 {
+
                     continue;
                 }
                 if ((((int)WeekDate.DayOfWeek) % 6) == 0)
                 {
                     break;
                 }
-                WeekDate = WeekDate.AddDays(1);
+               
             }
             WeekDate = WeekDate.AddDays(-1);
             WeekDate = Convert.ToDateTime(WeekDate.ToString("yyyy-MM-dd " + "17:30:00"));
