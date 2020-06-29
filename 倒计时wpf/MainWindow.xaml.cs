@@ -24,17 +24,31 @@ namespace 倒计时wpf
     {
         private DateTime DayDate;
         private DateTime WeekDate;
-        private Dictionary<string, int> Holliday = new Dictionary<string, int>();
         public MainWindow()
         {
             InitializeComponent();
+            init();
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Enabled = true;
+            timer.Interval = 1000;//执行间隔时间,单位为毫秒    
+            timer.Start();
+            timer.Elapsed += new System.Timers.ElapsedEventHandler(settime);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+        private void init()
+        {
+            Dictionary<string, int> Holliday;
+
             DayDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd " + "17:30:00"));
             WeekDate = DateTime.Now.AddDays(-1);
-            GetHoliday(DateTime.Now.ToString("yyyy-MM-dd"));
+            Holliday = GetHoliday(DateTime.Now.ToString("yyyy-MM-dd"));
 
-            while (true){
+            while (true)
+            {
                 WeekDate = WeekDate.AddDays(1);
-                if (Holliday.ContainsKey(WeekDate.ToString("yyyy-M-d"))&&Holliday[WeekDate.ToString("yyyy-M-d")] == 1)
+
+                if (Holliday.ContainsKey(WeekDate.ToString("yyyy-M-d")) && Holliday[WeekDate.ToString("yyyy-M-d")] == 1)
                 {
                     break;
                 }
@@ -47,15 +61,9 @@ namespace 倒计时wpf
                 {
                     break;
                 }
-               
             }
             WeekDate = WeekDate.AddDays(-1);
             WeekDate = Convert.ToDateTime(WeekDate.ToString("yyyy-MM-dd " + "17:30:00"));
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Enabled = true;
-            timer.Interval = 1000;//执行间隔时间,单位为毫秒    
-            timer.Start();
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(settime);
         }
         private void settime(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -85,12 +93,14 @@ namespace 倒计时wpf
                 }
 
             });
-          
+
 
 
         }
-        private  void GetHoliday(string date)
+        private Dictionary<string, int> GetHoliday(string date)
         {
+            Dictionary<string, int> Holliday = new Dictionary<string, int>();
+
             WebClient client = new WebClient();
             client.Encoding = Encoding.UTF8;
             var url = $"https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query={date}&resource_id=6018";
@@ -123,7 +133,7 @@ namespace 倒计时wpf
                     }
                 }
             }
-
+            return Holliday;
         }
         public class Calendar
         {
