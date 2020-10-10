@@ -7,8 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid >
-        <TextBlock TextAlignment ="Center"  Name="BlockText" HorizontalAlignment="Left" Margin="0,159,-0.4,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="794"/>
-        <TextBlock TextAlignment ="Center" Name="BlockText1" HorizontalAlignment="Left" Margin="0,194,-0.4,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="794"/>
+        <TextBlock  TextAlignment ="Center"  Name="BlockText" HorizontalAlignment="Center"  TextWrapping="Wrap" Margin="0,-20,0,0" Text="TextBlock" VerticalAlignment="Center"   Width="794"  Height="13"/>
+        <TextBlock TextAlignment ="Center" Name="BlockText1" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Width="794"/>
+        <Button Content="确定" HorizontalAlignment="Left" Margin="164,27,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="hour" HorizontalAlignment="Left" Height="18" Margin="34,27,0,0" TextWrapping="Wrap" Text="17" VerticalAlignment="Top" Width="24" TextChanged="TextBox_TextChanged"/>
+        <Label Content="时" HorizontalAlignment="Left" Margin="58,22,0,0" VerticalAlignment="Top" Height="23" Width="23"/>
+        <TextBox x:Name="minute" HorizontalAlignment="Left" Height="18" Margin="86,27,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top" Width="23"/>
+        <Label Content="分下班&#xD;&#xA;" HorizontalAlignment="Left" Margin="109,22,0,0" VerticalAlignment="Top" Width="50" Height="23"/>
 
     </Grid>
 </Window>

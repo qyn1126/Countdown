@@ -29,18 +29,26 @@ namespace 倒计时wpf
             InitializeComponent();
             init();
             System.Timers.Timer timer = new System.Timers.Timer();
+
             timer.Enabled = true;
             timer.Interval = 1000;//执行间隔时间,单位为毫秒    
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(settime);
             GC.Collect();
             GC.WaitForPendingFinalizers();
+           
         }
         private void init()
         {
+            int h = 17;
+            int m = 30;
+            hour.Text = Properties.Settings.Default.savehour.ToString();
+            minute.Text= Properties.Settings.Default.savemin.ToString();
+            int.TryParse(hour.Text, out h);
+            int.TryParse(minute.Text, out m);
             Dictionary<string, int> Holliday;
 
-            DayDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd " + "17:30:00"));
+            DayDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd " + $"{h}:{m}:00"));
             WeekDate = DateTime.Now.AddDays(-1);
             Holliday = GetHoliday(DateTime.Now.ToString("yyyy-MM-dd"));
 
@@ -63,7 +71,7 @@ namespace 倒计时wpf
                 }
             }
             WeekDate = WeekDate.AddDays(-1);
-            WeekDate = Convert.ToDateTime(WeekDate.ToString("yyyy-MM-dd " + "17:30:00"));
+            WeekDate = Convert.ToDateTime(WeekDate.ToString("yyyy-MM-dd " + $"{h}:{m}:00"));
         }
         private void settime(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -77,6 +85,7 @@ namespace 倒计时wpf
                 {
                     TimeSpan ts = DayDate.Subtract(time).Duration();
                     this.BlockText.Text = $"距离下班还有{Math.Ceiling(ts.TotalSeconds).ToString()}秒";
+                    
                 }
                 else
                 {
@@ -178,5 +187,22 @@ namespace 倒计时wpf
             public Holiday holiday { get; set; }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int h = 17;
+            int m = 30;
+            int.TryParse(hour.Text,out h);
+            int.TryParse(minute.Text, out m);
+            Properties.Settings.Default.savehour = h;
+            Properties.Settings.Default.savemin = m;
+            Properties.Settings.Default.Save();
+            DayDate = Convert.ToDateTime(DayDate.ToString("yyyy-MM-dd " + $"{h}:{m}:00"));
+            WeekDate = Convert.ToDateTime(WeekDate.ToString("yyyy-MM-dd " + $"{h}:{m}:00"));
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
